@@ -3,8 +3,10 @@ import { View, Text, Button, useColorScheme } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme, useTheme } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 function HomeScreen() {
   const { colors } = useTheme();
@@ -78,39 +80,58 @@ const darkTheme = {
 };
 
 export default function App() {
-  const deviceColorScheme = useColorScheme(); // Get the device's color scheme
-  const isDarkMode = deviceColorScheme === 'dark'; // Set the initial mode based on the device's color scheme
+  const deviceColorScheme = useColorScheme();
+  const isDarkMode = deviceColorScheme === 'dark';
   const [isDarkModeState, setIsDarkMode] = useState(isDarkMode);
   const theme = isDarkModeState ? darkTheme : lightTheme;
 
   return (
     <NavigationContainer theme={theme}>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            let iconName;
-
-            if (route.name === 'Home') {
-              iconName = 'home-outline';
-            } else if (route.name === 'Buscar') {
-              iconName = 'search-outline';
-            } else if (route.name === 'Categorias') {
-              iconName = 'list-outline';
-            } else if (route.name === 'Perfil') {
-              iconName = 'person-outline';
-            }
-
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-        })}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Buscar" component={Buscar} />
-        <Tab.Screen name="Categorias" component={Categorias} />
-        <Tab.Screen name="Perfil">
-          {() => <Perfil setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
-        </Tab.Screen>
-      </Tab.Navigator>
+      <Stack.Navigator>
+       
+        <Stack.Screen
+          name="Tabs"
+          options={{ headerShown: false }}
+        >
+          {() => <Tabs setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
+        </Stack.Screen>
+      </Stack.Navigator>
     </NavigationContainer>
+  );
+}
+
+function Tabs({ setIsDarkMode, isDarkMode }) {
+  const { colors } = useTheme();
+  const textColor = colors.text;
+
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = 'home-outline';
+          } else if (route.name === 'Buscar') {
+            iconName = 'search-outline';
+          } else if (route.name === 'Categorias') {
+            iconName = 'list-outline';
+          } else if (route.name === 'Perfil') {
+            iconName = 'person-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Buscar" component={Buscar} />
+      <Tab.Screen name="Categorias" component={Categorias} />
+      <Tab.Screen
+        name="Perfil"
+      >
+        {() => <Perfil setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />}
+      </Tab.Screen>
+    </Tab.Navigator>
   );
 }
