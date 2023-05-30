@@ -4,6 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme, useTheme } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from './src/screens/LoginScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -88,7 +90,8 @@ export default function App() {
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator>
-       
+      <Stack.Screen name="Login" component={LoginScreen}  />
+      <Stack.Screen name="Register" component={RegisterScreen}  />
         <Stack.Screen
           name="Tabs"
           options={{ headerShown: false }}
