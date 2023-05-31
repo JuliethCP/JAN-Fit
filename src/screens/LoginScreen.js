@@ -11,7 +11,7 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import LoginSVG from '../assets/images/login.jpg';
+import SvgLogin from '../assets/images/SvgLogin.js';
 import CustomButton from '../components/CustomButton';
 import InputField from '../components/InputField';
 
@@ -23,7 +23,14 @@ const LoginScreen = ({navigation}) => {
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
       <View style={{paddingHorizontal: 25}}>
         <View style={{alignItems: 'center'}}>
-      
+
+        <SvgLogin
+            height={400} // Ajusta la altura deseada
+            width={700} // Ajusta el ancho deseado
+
+            style={{ transform: [{ rotate: '-5deg' }] }}
+          />
+
        
         </View>
 

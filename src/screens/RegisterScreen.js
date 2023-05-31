@@ -1,16 +1,7 @@
 import React, {useState} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  TextInput,
-  Platform,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native';
+  SafeAreaView, ScrollView, View, Text, TextInput, Platform, TouchableOpacity,Pressable} from 'react-native';
 
-import DatePicker from 'react-native-date-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import InputField from '../components/InputField';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -19,11 +10,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../components/CustomButton';
 
 
-
 const RegisterScreen = ({navigation}) => {
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
-  const [dobLabel, setDobLabel] = useState('Date of Birth');
+  //const [dobLabel, setDobLabel] = useState('Date of Birth');
   const [dateOfBirth, setDateOfBirth] = useState('');
 
   const toggleDatePicker = () => {
@@ -64,7 +54,6 @@ const RegisterScreen = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         style={{paddingHorizontal: 25}}>
         
-
         <Text
           style={{
             fontFamily: 'Roboto-Medium',
