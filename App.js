@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, Text, Button, useColorScheme } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme, useTheme } from '@react-navigation/native';
@@ -6,9 +6,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import * as Font from 'expo-font';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+  
 
 function HomeScreen() {
   const { colors } = useTheme();
@@ -81,17 +83,35 @@ const darkTheme = {
   },
 };
 
+async function loadCustomFonts() {
+  await Font.loadAsync({
+    'Roboto-Medium': require('./src/assets/fonts/Roboto-Medium.ttf'),
+  });
+}
+
 export default function App() {
   const deviceColorScheme = useColorScheme();
   const isDarkMode = deviceColorScheme === 'dark';
   const [isDarkModeState, setIsDarkMode] = useState(isDarkMode);
   const theme = isDarkModeState ? darkTheme : lightTheme;
 
+  useEffect(() => {
+    loadCustomFonts();
+  }, []);
+
+  const [fontsLoaded] = Font.useFonts({
+    'Roboto-Medium': require('./src/assets/fonts/Roboto-Medium.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null; // Opcionalmente, puedes mostrar un indicador de carga mientras se cargan las fuentes
+  }
+
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen}  />
-      <Stack.Screen name="Register" component={RegisterScreen}  />
+      <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Register" component={RegisterScreen} /*options={{ headerShown: false }}*/ />
         <Stack.Screen
           name="Tabs"
           options={{ headerShown: false }}

@@ -5,21 +5,26 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-//import LoginSVG from '../assets/images/login.svg';
+import LoginSVG from '../assets/images/login.jpg';
 import CustomButton from '../components/CustomButton';
 import InputField from '../components/InputField';
+
+
+
 
 const LoginScreen = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
       <View style={{paddingHorizontal: 25}}>
         <View style={{alignItems: 'center'}}>
-          
+      
+       
         </View>
 
         <Text
@@ -46,7 +51,7 @@ const LoginScreen = ({navigation}) => {
           keyboardType="email-address"
         />
 
-<InputField
+        <InputField
           label={'Password'}
           icon={
             <Ionicons
@@ -71,7 +76,7 @@ const LoginScreen = ({navigation}) => {
           }}>
           <Text>New to the app?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={{color: '#AD40AF', fontWeight: '700'}}> Register</Text>
+            <Text style={{color: '#009188', fontWeight: '700'}}> Register</Text>
           </TouchableOpacity>
         </View>
       </View>

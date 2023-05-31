@@ -5,22 +5,58 @@ import {
   View,
   Text,
   TextInput,
+  Platform,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 
 import DatePicker from 'react-native-date-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import InputField from '../components/InputField';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import RegistrationSVG from '../assets/images/registration.svg';
+//import RegistrationSVG from '../assets/images/registration.svg';
 import CustomButton from '../components/CustomButton';
 
 
 
 const RegisterScreen = ({navigation}) => {
   const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
   const [dobLabel, setDobLabel] = useState('Date of Birth');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+
+  const toggleDatePicker = () => {
+    setShowPicker(!showPicker);
+  };
+
+  const onChange = ({type}, selectedDate) => {
+    if (type === 'set') {
+     const currentDate = selectedDate;
+      setDate(currentDate);
+
+      if(Platform.OS === 'android'){
+        toggleDatePicker();
+        setDateOfBirth(formatDate(currentDate));
+        //setDobLabel(currentDate.toDateString());
+      }
+
+    }else{
+      toggleDatePicker();
+    }
+  };
+
+  const formatDate = (rawDate) => {
+    let date = new Date(rawDate);
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+
+    return `${day}/${month}/${year}`;
+  };
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
@@ -38,13 +74,6 @@ const RegisterScreen = ({navigation}) => {
             marginBottom: 30,
           }}>
           Register
-        </Text>
-
-
-         
-
-        <Text style={{textAlign: 'center', color: '#666', marginBottom: 30}}>
-          Or, register with email ...
         </Text>
 
         <InputField
@@ -98,6 +127,7 @@ const RegisterScreen = ({navigation}) => {
           inputType="password"
         />
 
+
         <View
           style={{
             flexDirection: 'row',
@@ -112,29 +142,32 @@ const RegisterScreen = ({navigation}) => {
             color="#666"
             style={{marginRight: 5}}
           />
-          <TouchableOpacity onPress={() => setOpen(true)}>
-            <Text style={{color: '#666', marginLeft: 5, marginTop: 5}}>
-              {dobLabel}
-            </Text>
-          </TouchableOpacity>
-        </View>
 
-        <DatePicker
-          modal
-          open={open}
-          date={date}
-          mode={'date'}
-          maximumDate={new Date('2005-01-01')}
-          minimumDate={new Date('1980-01-01')}
-          onConfirm={date => {
-            setOpen(false);
-            setDate(date);
-            setDobLabel(date.toDateString());
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
+            {showPicker && (
+            <DateTimePicker
+              mode='date'
+              display='spinner'
+              value={date}
+              onChange={onChange}
+              maximumDate={new Date('2005-01-01')}
+              minimumDate={new Date('1980-01-01')}
+              />
+            )}
+
+            {!showPicker && (
+            <Pressable onPress={toggleDatePicker} >
+                <TextInput
+                  style={{flex: 1, marginLeft: 5}}
+                  placeholder="Date of Birth"
+                  placeholderTextColor="#666"
+                  value={dateOfBirth}
+                  onChangeText={setDateOfBirth}
+                  editable={false}
+                />
+              </Pressable>
+            )}
+        </View>
+   
 
         <CustomButton label={'Register'} onPress={() => {}} />
 
@@ -146,7 +179,7 @@ const RegisterScreen = ({navigation}) => {
           }}>
           <Text>Already registered?</Text>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={{color: '#AD40AF', fontWeight: '700'}}> Login</Text>
+            <Text style={{color: '#009188', fontWeight: '700'}}> Login</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
