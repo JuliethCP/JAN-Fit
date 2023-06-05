@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button, useColorScheme } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme, useTheme } from '@react-navigation/native';
@@ -6,19 +6,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import Home from './src/components/Home';
+import Cronometro from './src/components/Cronometro';
 import * as Font from 'expo-font';
+import DatosUsuario from './src/components/DatosUsuario';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-  
 
 function HomeScreen() {
-  const { colors } = useTheme();
-  const textColor = colors.text;
-
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: textColor }}>¡Esto es la página principal!</Text>
+    <View style={{ flex: 1 }}>
+      <Home />
+      <Cronometro />
     </View>
   );
 }
@@ -45,7 +45,6 @@ function Buscar() {
   );
 }
 
-
 function Perfil({ setIsDarkMode, isDarkMode }) {
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -56,20 +55,21 @@ function Perfil({ setIsDarkMode, isDarkMode }) {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: textColor }}>¡Esto es la pestaña 3!</Text>
+      <DatosUsuario />
       <Button title={isDarkMode ? 'Modo Claro' : 'Modo Oscuro'} onPress={toggleDarkMode} />
     </View>
   );
 }
 
-
 const lightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
+    background: '#FFFFFF',
+    text: '#000000',
+    card: '#E5E5E5',
     primary: '#009188',
-    text: '#000000', // Set the text color to black in light mode
-    // Other custom colors in light mode...
+    statusBarStyle: 'dark-content',
   },
 };
 
@@ -77,9 +77,11 @@ const darkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
+    background: '#000000',
+    text: '#FFFFFF',
+    card: '#212121',
     primary: '#009188',
-    text: '#ffffff', // Set the text color to white in dark mode
-    // Other custom colors in dark mode...
+    statusBarStyle: 'light-content',
   },
 };
 
@@ -99,6 +101,13 @@ export default function App() {
     loadCustomFonts();
   }, []);
 
+  const { colors } = useTheme();
+
+  const containerStyle = {
+    flex: 1,
+    backgroundColor: colors.background,
+  };
+
   const [fontsLoaded] = Font.useFonts({
     'Roboto-Medium': require('./src/assets/fonts/Roboto-Medium.ttf'),
   });
@@ -107,18 +116,19 @@ export default function App() {
     return null; // Opcionalmente, puedes mostrar un indicador de carga mientras se cargan las fuentes
   }
 
+//     <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+//<Stack.Screen name="Register" component={RegisterScreen} /*options={{ headerShown: false }}*/ />
+
   return (
     <NavigationContainer theme={theme}>
-      <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Register" component={RegisterScreen} /*options={{ headerShown: false }}*/ />
-        <Stack.Screen
-          name="Tabs"
-          options={{ headerShown: false }}
-        >
-          {() => <Tabs setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
-        </Stack.Screen>
-      </Stack.Navigator>
+      <View style={containerStyle}>
+        <Stack.Navigator>
+        
+          <Stack.Screen name="Tabs" options={{ headerShown: false }}>
+            {() => <Tabs setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </View>
     </NavigationContainer>
   );
 }
@@ -150,9 +160,7 @@ function Tabs({ setIsDarkMode, isDarkMode }) {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Buscar" component={Buscar} />
       <Tab.Screen name="Categorias" component={Categorias} />
-      <Tab.Screen
-        name="Perfil"
-      >
+      <Tab.Screen name="Perfil">
         {() => <Perfil setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />}
       </Tab.Screen>
     </Tab.Navigator>
