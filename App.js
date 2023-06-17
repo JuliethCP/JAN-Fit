@@ -116,14 +116,14 @@ export default function App() {
     return null; // Opcionalmente, puedes mostrar un indicador de carga mientras se cargan las fuentes
   }
 
-//     <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-//<Stack.Screen name="Register" component={RegisterScreen} /*options={{ headerShown: false }}*/ />
+//     
 
   return (
     <NavigationContainer theme={theme}>
       <View style={containerStyle}>
         <Stack.Navigator>
-        
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Register" component={RegisterScreen} /*options={{ headerShown: false }}*/ />
           <Stack.Screen name="Tabs" options={{ headerShown: false }}>
             {() => <Tabs setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
           </Stack.Screen>
