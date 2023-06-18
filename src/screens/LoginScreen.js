@@ -1,6 +1,13 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
-  SafeAreaView, ScrollView, View, Text, TextInput, Platform, TouchableOpacity,Pressable} from 'react-native';
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,39 +16,39 @@ import CustomButton from '../components/CustomButton';
 import InputField from '../components/InputField';
 import md5 from 'md5';
 import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = () => {
-
   const navigation = useNavigation();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     try {
-      // Encriptar la contraseña ingresada por el usuario con MD5
+      // Encrypt the password entered by the user with MD5
       const encryptedPassword = md5(password);
 
-      // Verificar si ya existe un registro con el mismo nombre de usuario y contraseña
-      const existingUser = await axios.get('https://f47b-190-211-119-6.ngrok.io/api/usuarios', {
-        params: {
-          correo: email,
-          contrasena: encryptedPassword, // Utilizar la contraseña encriptada
-        },
-      });
+      // Check if a user with the same username and password already exists
+      const existingUser = await axios.get(
+        ' https://1790-190-211-119-6.ngrok.io/api/usuarios',
+        {
+          params: {
+            correo: email,
+            contrasena: encryptedPassword, // Use the encrypted password
+          },
+        }
+      );
 
       if (existingUser.data.length > 0) {
         const userExists = existingUser.data.some(
-          (user) => user.correo === email && user.contrasena === encryptedPassword
+          (user) =>
+            user.correo === email && user.contrasena === encryptedPassword
         );
         if (userExists) {
           alert('Inicio de sesión exitoso.');
           navigation.navigate('Tabs'); // Navigate to the Tabs screen
           return;
         }
-      }else{
-        alert('Usuario o contraseña incorrectos. Intente nuevamente o regístrese');
-        return;
       }
     } catch (error) {
       console.log('Error:', error);

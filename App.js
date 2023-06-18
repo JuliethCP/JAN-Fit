@@ -10,6 +10,7 @@ import Home from './src/components/Home';
 import Cronometro from './src/components/Cronometro';
 import * as Font from 'expo-font';
 import DatosUsuario from './src/components/DatosUsuario';
+import Categories from './src/components/Categories';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -29,7 +30,8 @@ function Categorias() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: textColor }}>¡Esto es la pestaña 1!</Text>
+      <Categories />
+    
     </View>
   );
 }
@@ -116,14 +118,14 @@ export default function App() {
     return null; // Opcionalmente, puedes mostrar un indicador de carga mientras se cargan las fuentes
   }
 
-//     
+//      <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+//<Stack.Screen name="Register" component={RegisterScreen} /*options={{ headerShown: false }}*/ />
 
   return (
     <NavigationContainer theme={theme}>
       <View style={containerStyle}>
         <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Register" component={RegisterScreen} /*options={{ headerShown: false }}*/ />
+       
           <Stack.Screen name="Tabs" options={{ headerShown: false }}>
             {() => <Tabs setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
           </Stack.Screen>

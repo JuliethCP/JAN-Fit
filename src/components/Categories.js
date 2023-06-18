@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
-const Categories = ({ route }) => {
-  const { type } = route.params;
-
+const Categories = (  ) => {
+ 
   return (
     <View>
       <Text style={{ fontSize: 20, fontWeight: 'bold', margin: 10 }}>
-        Exercises for {type.name}
+        hola
       </Text>
+      <Image
+        source={{ uri: 'https://i.imgur.com/YFS5Z2r.gif' }}
+        style={{ width: 500, height: 500 }}
+      />
       {/* Aquí puedes mostrar los ejercicios específicos para el tipo seleccionado */}
     </View>
   );
