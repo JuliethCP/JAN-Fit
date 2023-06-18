@@ -14,7 +14,44 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../components/CustomButton';
 import InputField from '../components/InputField';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = () => {
+  const navigation = useNavigation();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      // Encrypt the password entered by the user with MD5
+      const encryptedPassword = md5(password);
+
+      // Check if a user with the same username and password already exists
+      const existingUser = await axios.get(
+        ' https://1790-190-211-119-6.ngrok.io/api/usuarios',
+        {
+          params: {
+            correo: email,
+            contrasena: encryptedPassword, // Use the encrypted password
+          },
+        }
+      );
+
+      if (existingUser.data.length > 0) {
+        const userExists = existingUser.data.some(
+          (user) =>
+            user.correo === email && user.contrasena === encryptedPassword
+        );
+        if (userExists) {
+          alert('Inicio de sesión exitoso.');
+          navigation.navigate('Tabs'); // Navigate to the Tabs screen
+          return;
+        }
+      }
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  };
+
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
       <View style={{paddingHorizontal: 25}}>
