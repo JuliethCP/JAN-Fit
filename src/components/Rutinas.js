@@ -2,81 +2,11 @@ import React from 'react';
 import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Rutinas = () => {
+const Rutinas = ({ route }) => {
+  const { titulo } = route.params;
+
   const rutinasData = [
-    {
-      "id": 2,
-      "nombrerutina": "Rutina de cardio",
-      "duracion": "00:30:00",
-      "tiempodescanso": "00:02:00",
-      "tipo": "cardio",
-      "nivel": "principiante"
-    },
-    {
-      "id": 3,
-      "nombrerutina": "Rutina de entrenamiento funcional",
-      "duracion": "00:40:00",
-      "tiempodescanso": "00:00:40",
-      "tipo": "entrenamiento funcional",
-      "nivel": "principiante"
-    },
-    {
-      "id": 4,
-      "nombrerutina": "Rutina de tonificación muscular",
-      "duracion": "00:40:00",
-      "tiempodescanso": "00:01:00",
-      "tipo": "tonificación muscular",
-      "nivel": "principiante"
-    },
-    {
-      "id": 5,
-      "nombrerutina": "Rutina de entrenamiento de resistencia",
-      "duracion": "00:40:00",
-      "tiempodescanso": "00:00:40",
-      "tipo": "resistencia",
-      "nivel": "principiante"
-    },
-    {
-      "id": 6,
-      "nombrerutina": "Rutina de entrenamiento de cuerpo completo",
-      "duracion": "00:50:00",
-      "tiempodescanso": "00:01:00",
-      "tipo": "cuerpo completo",
-      "nivel": "principiante"
-    },
-    {
-      "id": 7,
-      "nombrerutina": "Rutina de entrenamiento de piernas",
-      "duracion": "00:40:00",
-      "tiempodescanso": "00:01:00",
-      "tipo": "piernas",
-      "nivel": "principiante"
-    },
-    {
-      "id": 8,
-      "nombrerutina": "Rutina de entrenamiento de brazos",
-      "duracion": "00:40:00",
-      "tiempodescanso": "00:00:40",
-      "tipo": "brazos",
-      "nivel": "principiante"
-    },
-    {
-      "id": 9,
-      "nombrerutina": "Rutina de entrenamiento de espalda",
-      "duracion": "00:40:00",
-      "tiempodescanso": "00:01:00",
-      "tipo": "espalda",
-      "nivel": "principiante"
-    },
-    {
-      "id": 10,
-      "nombrerutina": "Rutina de entrenamiento de pecho",
-      "duracion": "00:40:00",
-      "tiempodescanso": "00:01:00",
-      "tipo": "pecho",
-      "nivel": "principiante"
-    }
-    // ... Resto de los datos de rutinas
+    // Datos de las rutinas
   ];
 
   const renderRutina = ({ item }) => {
@@ -108,18 +38,16 @@ const Rutinas = () => {
       </View>
     );
   };
-  
 
-  
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>{titulo}</Text>
       <FlatList
-  data={rutinasData}
-  renderItem={renderRutina}
-  keyExtractor={(item) => item.id.toString()}
-  style={{ alignSelf: 'stretch' }} // Agrega el estilo alignSelf
-/>
-
+        data={rutinasData}
+        renderItem={renderRutina}
+        keyExtractor={(item) => item.id.toString()}
+        style={{ alignSelf: 'stretch' }} // Agrega el estilo alignSelf
+      />
     </View>
   );
 };

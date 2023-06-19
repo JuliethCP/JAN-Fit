@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const TiposRutinasComponent = () => {
   const tiposRutinas = [
@@ -14,14 +15,24 @@ const TiposRutinasComponent = () => {
   const screenWidth = Dimensions.get('window').width;
   const squareSize = screenWidth / 2 - 20; // Dividir en dos columnas y restar el margen
 
+  const navigation = useNavigation();
+
+  const handleTipoRutinaPress = (tipo) => {
+    navigation.navigate('Rutinas', { titulo: tipo });
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tipos de Rutinas</Text>
       <View style={styles.gridContainer}>
         {tiposRutinas.map((tipo, index) => (
-          <View key={index} style={[styles.square, { width: squareSize, height: squareSize }]}>
+          <TouchableOpacity
+            key={index}
+            style={[styles.square, { width: squareSize, height: squareSize }]}
+            onPress={() => handleTipoRutinaPress(tipo)}
+          >
             <Text style={styles.tipoText}>{tipo}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>
