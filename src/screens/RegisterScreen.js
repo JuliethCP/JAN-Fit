@@ -70,7 +70,7 @@ const RegisterScreen = ({navigation}) => {
       }
   
        // Verificar si ya existe un registro con el mismo nombre y contraseña
-    const existingUser = await axios.get(' https://1790-190-211-119-6.ngrok.io/api/usuarios', {
+    const existingUser = await axios.get('https://896e-190-211-119-6.ngrok.io/api/usuarios', {
       params: {
         nombre: fullName,
         correo: email
@@ -124,7 +124,7 @@ const RegisterScreen = ({navigation}) => {
 
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+    <SafeAreaView style={{flex: 1, justifyContent: 'center', paddingVertical: 20}}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{paddingHorizontal: 25}}>

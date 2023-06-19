@@ -41,7 +41,7 @@ const LoginScreen = () => {
 
       // Verificar si ya existe un usuario con el mismo correo electrónico y contraseña
       const existingUser = await axios.get(
-        'https://d0eb-190-211-119-6.ngrok.io/api/usuarios',
+        ' https://896e-190-211-119-6.ngrok.io/api/usuarios',
         {
           params: {
             correo: email,
