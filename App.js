@@ -10,8 +10,7 @@ import Home from './src/components/Home';
 import Cronometro from './src/components/Cronometro';
 import * as Font from 'expo-font';
 import DatosUsuario from './src/components/DatosUsuario';
-import TiposRutinas from './src/components/TipoRutinas';
-import { useNavigation } from '@react-navigation/native';
+import Categories from './src/components/Categories';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -20,12 +19,12 @@ function HomeScreen() {
   return (
     <View style={{ flex: 1 }}>
       <Home />
-      <Cronometro />
+      
     </View>
   );
 }
 
-function Rutinas() {
+function Categorias() {
   const { colors } = useTheme();
   const textColor = colors.text;
 
@@ -126,7 +125,9 @@ export default function App() {
     <NavigationContainer theme={theme}>
       <View style={containerStyle}>
         <Stack.Navigator>
-       
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Ejercicios" component={Ejercicios} />
+        <Stack.Screen name="InfoEjercicios" component={InfoEjercicios} />
           <Stack.Screen name="Tabs" options={{ headerShown: false }}>
             {() => <Tabs setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
           </Stack.Screen>

@@ -1,50 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
+import { useNavigation, useTheme } from '@react-navigation/native';
 
 const Home = () => {
-  const [exercises, setExercises] = useState([]);
+  const navigation = useNavigation();
+  const { colors } = useTheme();
+  const [muscleGroups, setMuscleGroups] = useState([]);
 
   useEffect(() => {
-    fetchExercises();
+    fetchMuscleGroups();
   }, []);
 
-  const fetchExercises = async () => {
+  const fetchMuscleGroups = async () => {
     try {
-      const response = await axios.get('https://wger.de/api/v2/exercise/', {
-        headers: {
-          'Authorization': '1234567890abcde'
-        },
-        params: {
-          'language': 2,
-          'limit': 10
-        }
-      });
-      setExercises(response.data.results);
+      const response = await axios.get('https://46d7-190-211-119-6.ngrok.io/api/grupos_musculares');
+      const data = response.data;
+      const sortedGroups = data.sort((a, b) => a.grupomuscular.localeCompare(b.grupomuscular)); // Ordenar los grupos alfabéticamente
+      setMuscleGroups(sortedGroups);
     } catch (error) {
       console.error(error);
     }
   };
+  
+  const handleGroupPress = (grupoMuscular) => {
+    const group = muscleGroups.find((group) => group.grupomuscular === grupoMuscular);
+    const groupExercises = group ? group.ejerciciosasociados : [];
+    navigation.navigate('Ejercicios', { ejercicios: groupExercises });
+  };
 
-  const renderExercise = ({ item }) => {
+  const renderMuscleGroup = ({ item }) => {
+    const { grupomuscular, ejerciciosasociados } = item;
+
     return (
-      
       <TouchableOpacity
-        onPress={() => navigation.navigate('ExerciseDetail', { exercise: item })}
-        style={styles.exerciseContainer}
+        style={[styles.groupContainer, { backgroundColor: colors.card }]}
+        onPress={() => handleGroupPress(grupomuscular)}
       >
-        <Text style={styles.exerciseName}>{item.name}</Text>
+        <Text style={[styles.groupTitle, { color: colors.text }]}>{grupomuscular}</Text>
       </TouchableOpacity>
     );
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Exercise List</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>Exercise List</Text>
       <FlatList
-        data={exercises}
-        renderItem={renderExercise}
-        keyExtractor={(item) => item.id.toString()}
+        data={muscleGroups}
+        renderItem={renderMuscleGroup}
+        keyExtractor={(item, index) => index.toString()}
       />
     </View>
   );
@@ -55,19 +59,19 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 20,
     paddingHorizontal: 10,
-    backgroundColor: '#fff',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  exerciseContainer: {
+  groupContainer: {
+    alignItems: 'center',
     paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 10,
   },
-  exerciseName: {
+  groupTitle: {
     fontSize: 16,
   },
 });
