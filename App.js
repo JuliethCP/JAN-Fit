@@ -11,8 +11,6 @@ import Cronometro from './src/components/Cronometro';
 import * as Font from 'expo-font';
 import DatosUsuario from './src/components/DatosUsuario';
 import Categories from './src/components/Categories';
-import Ejercicios from './src/components/Ejercicios';
-import InfoEjercicios from './src/components/InfoEjercicios';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -26,20 +24,20 @@ function HomeScreen() {
         </Stack.Navigator>
   );
 }
-//<Cronometro />
+
 function Categorias() {
   const { colors } = useTheme();
   const textColor = colors.text;
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Categories />
+      <TiposRutinas />
     
     </View>
   );
 }
 
-function Buscar() {
+function Ejercicios() {
   const { colors } = useTheme();
   const textColor = colors.text;
 
@@ -150,9 +148,9 @@ function Tabs({ setIsDarkMode, isDarkMode }) {
 
           if (route.name === 'Home') {
             iconName = 'home-outline';
-          } else if (route.name === 'Buscar') {
+          } else if (route.name === 'Ejercicios') {
             iconName = 'search-outline';
-          } else if (route.name === 'Categorias') {
+          } else if (route.name === 'Rutinas') {
             iconName = 'list-outline';
           } else if (route.name === 'Perfil') {
             iconName = 'person-outline';
@@ -163,8 +161,8 @@ function Tabs({ setIsDarkMode, isDarkMode }) {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Buscar" component={Buscar} />
-      <Tab.Screen name="Categorias" component={Categorias} />
+      <Tab.Screen name="Ejercicios" component={Ejercicios} />
+      <Tab.Screen name="Rutinas" component={Rutinas} />
       <Tab.Screen name="Perfil">
         {() => <Perfil setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />}
       </Tab.Screen>
