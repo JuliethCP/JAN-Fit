@@ -3,7 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native
 import axios from 'axios';
 import { useNavigation, useTheme } from '@react-navigation/native';
 
-const Home = () => {
+const MainM = () => {
   const navigation = useNavigation();
   const { colors } = useTheme();
   const [muscleGroups, setMuscleGroups] = useState([]);
@@ -14,7 +14,7 @@ const Home = () => {
 
   const fetchMuscleGroups = async () => {
     try {
-      const response = await axios.get('https://46d7-190-211-119-6.ngrok.io/api/grupos_musculares');
+      const response = await axios.get('https://eaea-190-211-119-6.ngrok.io/api/grupos_musculares');
       const data = response.data;
       const sortedGroups = data.sort((a, b) => a.grupomuscular.localeCompare(b.grupomuscular)); // Ordenar los grupos alfabéticamente
       setMuscleGroups(sortedGroups);
@@ -22,7 +22,7 @@ const Home = () => {
       console.error(error);
     }
   };
-  
+
   const handleGroupPress = (grupoMuscular) => {
     const group = muscleGroups.find((group) => group.grupomuscular === grupoMuscular);
     const groupExercises = group ? group.ejerciciosasociados : [];
@@ -32,14 +32,20 @@ const Home = () => {
   const renderMuscleGroup = ({ item }) => {
     const { grupomuscular, ejerciciosasociados } = item;
 
-    return (
-      <TouchableOpacity
-        style={[styles.groupContainer, { backgroundColor: colors.card }]}
-        onPress={() => handleGroupPress(grupomuscular)}
-      >
-        <Text style={[styles.groupTitle, { color: colors.text }]}>{grupomuscular}</Text>
-      </TouchableOpacity>
-    );
+    // Verificar si el objeto tiene las propiedades adecuadas
+    if (grupomuscular && ejerciciosasociados) {
+      return (
+        <TouchableOpacity
+          style={[styles.groupContainer, { backgroundColor: colors.card }]}
+          onPress={() => handleGroupPress(grupomuscular)}
+        >
+          <Text style={[styles.groupTitle, { color: colors.text }]}>{grupomuscular}</Text>
+        </TouchableOpacity>
+      );
+    }
+
+    // Si el objeto no tiene las propiedades adecuadas, se muestra un componente vacío
+    return null;
   };
 
   return (
@@ -76,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default MainM;
