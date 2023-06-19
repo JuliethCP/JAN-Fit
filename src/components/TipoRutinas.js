@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const TiposRutinasComponent = () => {
+const TiposRutinas = () => {
   const tiposRutinas = [
     'Cardio',
     'Entrenamiento Funcional',
@@ -23,7 +23,6 @@ const TiposRutinasComponent = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tipos de Rutinas</Text>
       <View style={styles.gridContainer}>
         {tiposRutinas.map((tipo, index) => (
           <TouchableOpacity
@@ -67,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TiposRutinasComponent;
+export default TiposRutinas;
