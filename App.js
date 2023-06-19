@@ -6,34 +6,35 @@ import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
-import MainM from './src/components/MainM';
+import Home from './src/components/Home';
 import Cronometro from './src/components/Cronometro';
 import * as Font from 'expo-font';
 import DatosUsuario from './src/components/DatosUsuario';
-import Categories from './src/components/Categories';
+import TiposRutinas from './src/components/TipoRutinas';
+import Rutine from './src/components/Rutinas';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-createStackNavigator 
+
 function HomeScreen() {
   return (
-      <Stack.Navigator>
-       <Stack.Screen name="MainM" component={MainM} />
-        <Stack.Screen name="Ejercicios" component={Ejercicios} />
-        <Stack.Screen name="InfoEjercicios" component={InfoEjercicios} />
-        </Stack.Navigator>
+    <View style={{ flex: 1 }}>
+      <Home />
+      <Cronometro />
+    </View>
   );
 }
 
-function Categorias() {
+function Rutinas() {
   const { colors } = useTheme();
   const textColor = colors.text;
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <TiposRutinas />
-    
-    </View>
+    <Stack.Navigator>
+    <Stack.Screen name="TiposRutinas" component={TiposRutinas} />
+    <Stack.Screen name="Rutinas" component={Rutine} />
+  </Stack.Navigator>
   );
 }
 
