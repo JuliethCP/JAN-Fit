@@ -11,13 +11,13 @@ const Rutinas = () => {
   const [rutinasData, setRutinasData] = useState([]);
 
   useEffect(() => {
-    fetch(`https://896e-190-211-119-6.ngrok.io/api/rutinas/tipo/${tipo}`)
+    fetch(`https://884d-190-211-119-6.ngrok.io/api/rutinas/tipo/${tipo}`)
       .then(response => response.json())
       .then(data => {
         setRutinasData(data);
       })
       .catch(error => {
-        console.error(error);
+        console.log(error);
       });
   }, [tipo]);
 

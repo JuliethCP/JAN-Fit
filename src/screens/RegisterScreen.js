@@ -70,7 +70,7 @@ const RegisterScreen = ({navigation}) => {
       }
   
        // Verificar si ya existe un registro con el mismo nombre y contraseña
-    const existingUser = await axios.get('https://896e-190-211-119-6.ngrok.io/api/usuarios', {
+    const existingUser = await axios.get('https://884d-190-211-119-6.ngrok.io/api/usuarios', {
       params: {
         nombre: fullName,
         correo: email
@@ -93,7 +93,7 @@ const RegisterScreen = ({navigation}) => {
         fechaNacimiento: dateOfBirth
       };
   
-      axios.post(' https://1790-190-211-119-6.ngrok.io/api/usuarios', data)
+      axios.post('https://884d-190-211-119-6.ngrok.io/api/usuarios', data)
         .then(response => {
           // Maneja la respuesta del servidor
         //  console.log(response.data);

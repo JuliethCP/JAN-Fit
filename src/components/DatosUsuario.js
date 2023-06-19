@@ -46,21 +46,33 @@ const DatosUsuario = () => {
 
   const guardarDatosEnDB = async () => {
     const datos = {
+      iduser: userInfo.id, // Agrega el campo ID del usuario
       peso: parseFloat(peso),
       altura: parseFloat(alturaMetros) + parseFloat(alturaCentimetros) / 100,
       imc: parseFloat(imc),
     };
-
-    // Guardar los datos en la base de datos utilizando la función executeQuery
+  
+    // Guardar los datos en la base de datos utilizando fetch
     try {
-      const query = `INSERT INTO DatosIMC (peso, altura, imc) VALUES (${datos.peso}, ${datos.altura}, ${datos.imc})`;
-      await executeQuery(query);
-      alert('Los datos se han guardado correctamente en la base de datos.');
+      const response = await fetch('https://884d-190-211-119-6.ngrok.io/api/progreso', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos),
+      });
+  
+      if (response.ok) {
+        alert('Los datos se han guardado correctamente en la base de datos.');
+      } else {
+        throw new Error('Error al guardar los datos en la base de datos');
+      }
     } catch (error) {
       console.error('Error al guardar los datos en la base de datos:', error);
       alert('Ha ocurrido un error al guardar los datos en la base de datos.');
     }
   };
+  
 
   const renderTablaItem = ({ item }) => (
     <View style={[styles.tablaItem, { backgroundColor: theme.colors.card }]}>

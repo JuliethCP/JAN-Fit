@@ -41,7 +41,7 @@ const LoginScreen = () => {
 
       // Verificar si ya existe un usuario con el mismo correo electrónico y contraseña
       const existingUser = await axios.get(
-        ' https://896e-190-211-119-6.ngrok.io/api/usuarios',
+        ' https://884d-190-211-119-6.ngrok.io/api/usuarios',
         {
           params: {
             correo: email,
@@ -88,6 +88,7 @@ const LoginScreen = () => {
                 width={700} // Ajustar el ancho deseado
                 style={{ transform: [{ rotate: '-5deg' }] }}
               />
+              <Text style={{fontFamily: 'Roboto-Medium', fontSize: 28, fontWeight: '500', color: '#333', marginBottom: 30,}}>Bienvenido a JAN-Fit</Text>
             </View>
             {datosUsuario && <DatosUsuario userInfo={datosUsuario} />}
             <Text

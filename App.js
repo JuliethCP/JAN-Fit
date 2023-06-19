@@ -24,7 +24,7 @@ const Stack = createStackNavigator();
 function HomeScreen() {
   return (
    <Stack.Navigator>
-      <Stack.Screen name="Inicio" component={MainM}  />
+      <Stack.Screen name="Home" component={MainM}  />
       <Stack.Screen name="Ejercicios" component={Ejercicios} />
       <Stack.Screen name="Informacion" component={Informacion} />
     </Stack.Navigator>
@@ -50,7 +50,7 @@ function EntrenamientoScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: textColor }}>¡Esto es la pestaña 2!</Text>
+      <Cronometro />
     </View>
   );
 }
@@ -160,7 +160,7 @@ function Tabs({ setIsDarkMode, isDarkMode }) {
           if (route.name === 'Inicio') {
             iconName = 'home-outline';
           } else if (route.name === 'Entrenamiento') {
-            iconName = 'search-outline';
+            iconName = 'fitness-outline';
           } else if (route.name === 'Rutinas') {
             iconName = 'list-outline';
           } else if (route.name === 'Perfil') {

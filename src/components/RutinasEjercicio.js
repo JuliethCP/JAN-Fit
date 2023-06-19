@@ -6,13 +6,13 @@ const RutinasEjercicio = ({ nombre }) => {
   const [rutinasData, setRutinasData] = useState([]);
 
   useEffect(() => {
-    fetch('https://896e-190-211-119-6.ngrok.io/api/rutina_ejercicios')
+    fetch('https://884d-190-211-119-6.ngrok.io/api/rutina_ejercicios')
       .then(response => response.json())
       .then(data => {
         setRutinasData(data);
       })
       .catch(error => {
-        console.error(error);
+        console.log(error);
       });
   }, []);
 
@@ -38,8 +38,7 @@ const RutinasEjercicio = ({ nombre }) => {
         data={rutinasData}
         renderItem={renderRutina}
         keyExtractor={(item, index) => index.toString()}
-        style={{ alignSelf: 'stretch' }}
-      />
+        style={{ alignSelf: 'stretch' }}/>
     </View>
   );
 };
