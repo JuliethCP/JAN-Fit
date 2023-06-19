@@ -14,7 +14,7 @@ const MainM = () => {
 
   const fetchMuscleGroups = async () => {
     try {
-      const response = await axios.get('https://eaea-190-211-119-6.ngrok.io/api/grupos_musculares');
+      const response = await axios.get('https://e550-190-211-119-6.ngrok.io/api/grupos_musculares');
       const data = response.data;
       const sortedGroups = data.sort((a, b) => a.grupomuscular.localeCompare(b.grupomuscular)); // Ordenar los grupos alfabéticamente
       setMuscleGroups(sortedGroups);

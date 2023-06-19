@@ -33,9 +33,8 @@ CREATE TABLE Ejercicios_GrpMuscular(
 	FOREIGN KEY (idGrupoMuscular) REFERENCES GruposMusculares(id)
 );
 
-ALTER TABLE ejercicios
-alter COLUMN duracion time,
-ADD COLUMN tiempoDescanso time;
+ALTER TABLE rutinas
+ADD COLUMN nivel varchar(15);
 
 select * from gruposmusculares
 CREATE TABLE Rutinas(
@@ -45,8 +44,8 @@ CREATE TABLE Rutinas(
 );
 
 UPDATE Rutinas
-SET tipo = 'glúteos'
-WHERE rutinas.id = 12;
+SET nivel = 'principiante'
+WHERE rutinas.id = 1;
 
 select * from Rutinas;
 

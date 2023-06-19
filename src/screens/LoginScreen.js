@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import UserContext from '../components/UserContext';
 import {
   SafeAreaView,
   View,
@@ -17,35 +18,66 @@ import InputField from '../components/InputField';
 import md5 from 'md5';
 import axios from 'axios';
 
+import DatosUsuario from '../components/DatosUsuario.js' // Importa el componente DatosUsuario
+
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const { userData, setUserData } = useContext(UserContext);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    // Verificar si se han obtenido los datos del usuario
+    if (userData) {
+      navigation.navigate('Tabs'); // Navegar a la pantalla de Tabs
+    }
+  }, [userData, navigation]);
+
   const handleLogin = async () => {
     try {
-      // Encrypt the password entered by the user with MD5
+      // Encriptar la contraseña ingresada por el usuario con MD5
       const encryptedPassword = md5(password);
 
-      // Check if a user with the same username and password already exists
+      // Verificar si ya existe un usuario con el mismo correo electrónico y contraseña
       const existingUser = await axios.get(
-        ' https://b3c2-190-211-119-6.ngrok.io/api/usuarios',
+        'https://e550-190-211-119-6.ngrok.io/api/usuarios',
         {
           params: {
             correo: email,
-            contrasena: encryptedPassword, // Use the encrypted password
+            contrasena: encryptedPassword, // Utilizar la contraseña encriptada
           },
         }
       );
-
+      
       if (existingUser.data.length > 0) {
-        const userExists = existingUser.data.some(
+        const userExists = existingUser.data.find(
           (user) =>
             user.correo === email && user.contrasena === encryptedPassword
         );
+       
         if (userExists) {
           alert('Inicio de sesión exitoso.');
+
+          // Assign user info to userData
+          const userInfo = {
+            nombre: userExists.nombre,
+            correo: userExists.correo,
+            fechanacimiento: userExists.fechanacimiento,
+            // Add other user data fields as needed
+          };
+          console.log(userInfo);
+          //setUserData(userInfo);
+//console.log('userData:', userData);
+        setUserData(userInfo);
+
+        useEffect(() => {
+          if (userData) {
+            console.log('userData:', userData);
+            // Aquí puedes realizar las acciones necesarias después de que los datos se hayan actualizado
+          }
+        }, [userData]);
+        
           navigation.navigate('Tabs'); // Navigate to the Tabs screen
           return;
         }
@@ -56,75 +88,72 @@ const LoginScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+      <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
       <View style={{paddingHorizontal: 25}}>
-        <View style={{alignItems: 'center'}}>
+            <View style={{alignItems: 'center'}}>
+              <SvgLogin
+                height={400} // Ajustar la altura deseada
+                width={700} // Ajustar el ancho deseado
+                style={{ transform: [{ rotate: '-5deg' }] }}
+              />
+            </View>
 
-        <SvgLogin
-            height={400} // Ajusta la altura deseada
-            width={700} // Ajusta el ancho deseado
+            <Text
+              style={{
+                fontFamily: 'Roboto-Medium',
+                fontSize: 28,
+                fontWeight: '500',
+                color: '#333',
+                marginBottom: 30,
+              }}>
+              Login
+            </Text>
 
-            style={{ transform: [{ rotate: '-5deg' }] }}
-          />
+            <InputField
+              label={'Email'}
+              icon={
+                <MaterialIcons
+                  name="alternate-email"
+                  size={20}
+                  color="#666"
+                  style={{marginRight: 5}}
+                />
+              }
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
 
-        </View>
+            <InputField
+              label={'Password'}
+              icon={
+                <Ionicons
+                  name="ios-lock-closed-outline"
+                  size={20}
+                  color="#666"
+                  style={{marginRight: 5}}
+                />
+              }
+              inputType="password"
+              value={password}
+              onChangeText={setPassword}
+              fieldButtonLabel={'Forgot?'}
+              fieldButtonFunction={() => {}}
+            />
 
-        <Text
-          style={{
-            fontFamily: 'Roboto-Medium',
-            fontSize: 28,
-            fontWeight: '500',
-            color: '#333',
-            marginBottom: 30,
-          }}>
-          Login
-        </Text>
+            <CustomButton label={'Login'} onPress={handleLogin} />
 
-        <InputField
-          label={'Email'}
-          icon={
-            <MaterialIcons
-            name="alternate-email"
-            size={20}
-            color="#666"
-            style={{marginRight: 5}}
-          />
-          }
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-        />
-
-        <InputField
-          label={'Password'}
-          icon={
-            <Ionicons
-            name="ios-lock-closed-outline"
-            size={20}
-            color="#666"
-            style={{marginRight: 5}}
-          />
-          }
-          inputType="password"
-          value={password}
-          onChangeText={setPassword}
-          fieldButtonLabel={"Forgot?"}
-          fieldButtonFunction={() => {}}
-        />
-        
-        <CustomButton label={"Login"} onPress={(handleLogin)} />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 30,
-          }}>
-          <Text>New to the app?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={{color: '#009188', fontWeight: '700'}}> Register</Text>
-          </TouchableOpacity>
-        </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginBottom: 30,
+              }}>
+              <Text>New to the app?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                <Text style={{color: '#009188', fontWeight: '700'}}> Register</Text>
+              </TouchableOpacity>
+            </View>
       </View>
     </SafeAreaView>
   );

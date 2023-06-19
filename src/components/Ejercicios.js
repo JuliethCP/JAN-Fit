@@ -14,7 +14,7 @@ const Ejercicios = ({ route }) => {
 
   const fetchExerciseInfo = async () => {
     try {
-      const response = await axios.get('https://eaea-190-211-119-6.ngrok.io/api/ejercicios');
+      const response = await axios.get('https://e550-190-211-119-6.ngrok.io/api/ejercicios');
       const data = response.data;
 
       // Verificar si ejercicios está definido y no es undefined

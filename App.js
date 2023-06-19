@@ -6,27 +6,31 @@ import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
-import Home from './src/components/Home';
+import MainM from './src/components/MainM';
 import Cronometro from './src/components/Cronometro';
 import * as Font from 'expo-font';
 import DatosUsuario from './src/components/DatosUsuario';
 import TiposRutinas from './src/components/TipoRutinas';
 import Rutine from './src/components/Rutinas';
+import Ejercicios from './src/components/Ejercicios';
+import InfoEjercicios from './src/components/InfoEjercicios';
 import { useNavigation } from '@react-navigation/native';
+import UserContext from './src/components/UserContext';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function HomeScreen() {
   return (
-    <View style={{ flex: 1 }}>
-      <Home />
-      <Cronometro />
-    </View>
+   <Stack.Navigator>
+      <Stack.Screen name="MainM" component={MainM}  />
+      <Stack.Screen name="Ejercicios" component={Ejercicios} />
+      <Stack.Screen name="InfoEjercicios" component={InfoEjercicios} />
+    </Stack.Navigator>
   );
 }
 
-function Rutinas() {
+function RutinasScreen() {
   const { colors } = useTheme();
   const textColor = colors.text;
 
@@ -38,7 +42,7 @@ function Rutinas() {
   );
 }
 
-function Ejercicios() {
+function Julian() {
   const { colors } = useTheme();
   const textColor = colors.text;
 
@@ -100,6 +104,7 @@ export default function App() {
   const isDarkMode = deviceColorScheme === 'dark';
   const [isDarkModeState, setIsDarkMode] = useState(isDarkMode);
   const theme = isDarkModeState ? darkTheme : lightTheme;
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     loadCustomFonts();
@@ -124,16 +129,18 @@ export default function App() {
 //<Stack.Screen name="Register" component={RegisterScreen} /*options={{ headerShown: false }}*/ />
 
   return (
+    <UserContext.Provider value={{ userData, setUserData }}>
     <NavigationContainer theme={theme}>
       <View style={containerStyle}>
         <Stack.Navigator>
-       
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Tabs" options={{ headerShown: false }}>
             {() => <Tabs setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
           </Stack.Screen>
         </Stack.Navigator>
       </View>
     </NavigationContainer>
+    </UserContext.Provider>
   );
 }
 
@@ -149,7 +156,7 @@ function Tabs({ setIsDarkMode, isDarkMode }) {
 
           if (route.name === 'Home') {
             iconName = 'home-outline';
-          } else if (route.name === 'Ejercicios') {
+          } else if (route.name === 'Julian') {
             iconName = 'search-outline';
           } else if (route.name === 'Rutinas') {
             iconName = 'list-outline';
@@ -162,8 +169,8 @@ function Tabs({ setIsDarkMode, isDarkMode }) {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Ejercicios" component={Ejercicios} />
-      <Tab.Screen name="Rutinas" component={Rutinas} />
+      <Tab.Screen name="Julian" component={Julian} />
+      <Tab.Screen name="Rutinas" component={RutinasScreen} />
       <Tab.Screen name="Perfil">
         {() => <Perfil setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />}
       </Tab.Screen>
