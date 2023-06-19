@@ -14,7 +14,7 @@ const MainM = () => {
 
   const fetchMuscleGroups = async () => {
     try {
-      const response = await axios.get('https://105a-190-211-119-6.ngrok.io/api/grupos_musculares');
+      const response = await axios.get('https://d0eb-190-211-119-6.ngrok.io/api/grupos_musculares');
       const data = response.data;
       const sortedGroups = data.sort((a, b) => a.grupomuscular.localeCompare(b.grupomuscular)); // Ordenar los grupos alfabéticamente
       setMuscleGroups(sortedGroups);
@@ -39,6 +39,7 @@ const MainM = () => {
     // Verificar si el objeto tiene las propiedades adecuadas
     if (grupomuscular && ejerciciosasociados) {
       return (
+        
         <TouchableOpacity
           key={index.toString()} // Utiliza el índice como clave única
           style={[styles.groupContainer, { backgroundColor: colors.card }]}

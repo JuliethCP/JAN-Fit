@@ -23,7 +23,7 @@ import DatosUsuario from '../components/DatosUsuario.js' // Importa el component
 const LoginScreen = () => {
   const navigation = useNavigation();
   const { userData, setUserData } = useContext(UserContext);
-
+  const [datosUsuario, setDatosUsuario] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -41,7 +41,7 @@ const LoginScreen = () => {
 
       // Verificar si ya existe un usuario con el mismo correo electrónico y contraseña
       const existingUser = await axios.get(
-        'https://105a-190-211-119-6.ngrok.io/api/usuarios',
+        'https://d0eb-190-211-119-6.ngrok.io/api/usuarios',
         {
           params: {
             correo: email,
@@ -67,17 +67,8 @@ const LoginScreen = () => {
             // Add other user data fields as needed
           };
           console.log(userInfo);
-          //setUserData(userInfo);
-//console.log('userData:', userData);
-        setUserData(userInfo);
-
-        useEffect(() => {
-          if (userData) {
-            console.log('userData:', userData);
-            // Aquí puedes realizar las acciones necesarias después de que los datos se hayan actualizado
-          }
-        }, [userData]);
-        
+          //<DatosUsuario userInfo={userInfo} /> // Agrega el componente DatosUsuario
+          setDatosUsuario(userInfo);
           navigation.navigate('Tabs'); // Navigate to the Tabs screen
           return;
         }
@@ -97,7 +88,7 @@ const LoginScreen = () => {
                 style={{ transform: [{ rotate: '-5deg' }] }}
               />
             </View>
-
+            {datosUsuario && <DatosUsuario userInfo={datosUsuario} />}
             <Text
               style={{
                 fontFamily: 'Roboto-Medium',
