@@ -476,11 +476,27 @@ JOIN Ejercicios_GrpMuscular EGM ON E.id = EGM.idEjercicio
 JOIN GruposMusculares GM ON EGM.idGrupoMuscular = GM.id;
 
 SELECT GM."nomGrupoMuscular" AS grupoMuscular, 
-       STRING_AGG(E.nombreEjercicio, ', ') AS ejerciciosAsociados
+       STRING_AGG(E.id || '- ' || E.nombreEjercicio, ', ') AS ejerciciosAsociados
 FROM Ejercicios E
 JOIN Ejercicios_GrpMuscular EGM ON E.id = EGM.idEjercicio
 JOIN GruposMusculares GM ON EGM.idGrupoMuscular = GM.id
 GROUP BY GM."nomGrupoMuscular";
+
+UPDATE Rutinas
+SET nivel = 'principiante'
+WHERE id IN (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 17, 22, 24, 27, 32, 37, 41, 45, 47, 50, 51);
+
+UPDATE Rutinas
+SET nivel = 'intermedio'
+WHERE id IN (15,16,19,20,21,25,29,34,36,39,40,42,43,48,49,52,53) ;
+
+
+
+UPDATE Rutinas
+SET nivel = 'avanzado'
+WHERE id IN (18,23,26,28,30, 31,33,35,38,44,46,54) ;
+
+
 
 SELECT E.nombreEjercicio AS ejercicio, 
        E.descripcion,

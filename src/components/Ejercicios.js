@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 const Ejercicios = ({ route }) => {
-  const { ejercicios } = route.params;
+  const { ejercicios } = route.params || {}; // Asigna un objeto vacío como valor predeterminado si route.params es undefined
   const [exerciseInfo, setExerciseInfo] = useState(null);
   const navigation = useNavigation();
 
@@ -14,15 +14,19 @@ const Ejercicios = ({ route }) => {
 
   const fetchExerciseInfo = async () => {
     try {
-      const response = await axios.get('https://46d7-190-211-119-6.ngrok.io/api/ejercicios');
+      const response = await axios.get('https://eaea-190-211-119-6.ngrok.io/api/ejercicios');
       const data = response.data;
 
-      // Filtrar los ejercicios que coinciden con los nombres recogidos
-      const filteredExercises = data.filter((ejercicio) =>
-        ejercicios.includes(ejercicio.ejercicio)
-      );
-      setExerciseInfo(filteredExercises);
+      // Verificar si ejercicios está definido y no es undefined
+      if (ejercicios && Array.isArray(ejercicios)) {
+        // Filtrar los ejercicios que coinciden con los nombres recogidos
+        const filteredExercises = data.filter((ejercicio) =>
+          ejercicios.includes(ejercicio.ejercicio)
+        );
+        setExerciseInfo(filteredExercises);
+      }
     } catch (error) {
+      alert('Error.');
       console.error(error);
     }
   };

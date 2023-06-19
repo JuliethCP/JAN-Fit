@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
-import Home from './src/components/Home';
+import MainM from './src/components/MainM';
 import Cronometro from './src/components/Cronometro';
 import * as Font from 'expo-font';
 import DatosUsuario from './src/components/DatosUsuario';
@@ -16,13 +16,14 @@ import InfoEjercicios from './src/components/InfoEjercicios';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
+createStackNavigator 
 function HomeScreen() {
   return (
-    <View style={{ flex: 1 }}>
-      <Home />
-      
-    </View>
+      <Stack.Navigator>
+       <Stack.Screen name="MainM" component={MainM} />
+        <Stack.Screen name="Ejercicios" component={Ejercicios} />
+        <Stack.Screen name="InfoEjercicios" component={InfoEjercicios} />
+        </Stack.Navigator>
   );
 }
 //<Cronometro />
@@ -127,9 +128,7 @@ export default function App() {
     <NavigationContainer theme={theme}>
       <View style={containerStyle}>
         <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Ejercicios" component={Ejercicios} />
-        <Stack.Screen name="InfoEjercicios" component={InfoEjercicios} />
+       
           <Stack.Screen name="Tabs" options={{ headerShown: false }}>
             {() => <Tabs setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
           </Stack.Screen>
