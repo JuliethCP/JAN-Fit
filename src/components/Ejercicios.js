@@ -14,7 +14,7 @@ const Ejercicios = ({ route }) => {
 
   const fetchExerciseInfo = async () => {
     try {
-      const response = await axios.get('https://d0eb-190-211-119-6.ngrok.io/api/ejercicios');
+      const response = await axios.get('https://105a-190-211-119-6.ngrok.io/api/ejercicios');
       const data = response.data;
 
       // Filtrar los ejercicios que coinciden con los nombres recogidos

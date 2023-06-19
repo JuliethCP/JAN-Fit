@@ -23,7 +23,7 @@ const Stack = createStackNavigator();
 function HomeScreen() {
   return (
    <Stack.Navigator>
-     <Stack.Screen name="Grupos Musculares" component={MainM} options={{ headerShown: false }} />
+      <Stack.Screen name="MainM" component={MainM}  />
       <Stack.Screen name="Ejercicios" component={Ejercicios} />
       <Stack.Screen name="InfoEjercicios" component={InfoEjercicios} />
     </Stack.Navigator>

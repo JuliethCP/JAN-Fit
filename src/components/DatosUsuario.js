@@ -1,35 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import UserContext from './UserContext';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DatosUsuario = () => {
- 
+const DatosUsuario = ( ) => {
+  const { userData } = useContext(UserContext);
+  console.log(userData);
   const [peso, setPeso] = useState('');
   const [alturaMetros, setAlturaMetros] = useState('');
   const [alturaCentimetros, setAlturaCentimetros] = useState('');
   const [imc, setIMC] = useState(0);
   const [mostrarResultados, setMostrarResultados] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+
   const theme = useTheme();
-
-  useEffect(() => {
-    obtenerUserInfo();
-  }, []);
-
-  const obtenerUserInfo = async () => {
-    try {
-      const userInfoString = await AsyncStorage.getItem('userInfo');
-      if (userInfoString !== null) {
-        const userInfo = JSON.parse(userInfoString);
-        setUserInfo(userInfo);
-      }
-    } catch (error) {
-      console.log('Error al obtener userInfo:', error);
-    }
-  };
-
-
 
   const handleCalcularIMC = () => {
     if (peso && alturaMetros && alturaCentimetros) {
@@ -79,16 +62,11 @@ const DatosUsuario = () => {
   ];
 
   return (
-<View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={styles.card}>
-        {userInfo && (
-          <React.Fragment>
-             <Text style={[styles.label, { color: theme.colors.text }]}>INFORMACIÓN DEL USUARIO</Text>
-            <Text style={[styles.label, { color: theme.colors.text }]}>Email: {userInfo.correo}</Text>
-            <Text style={[styles.label, { color: theme.colors.text }]}>Name: {userInfo.nombre}</Text>
-            <Text style={[styles.label, { color: theme.colors.text }]}>Fecha de nacimiento: {userInfo.fechanacimiento}</Text>
-          </React.Fragment>
-        )}
+        <Text style={styles.text}>Email: {correo}</Text>
+        <Text style={styles.text}>Name: {nombre}</Text>
+        <Text style={styles.text}>Fecha de nacimiento: {fechanacimiento}</Text>
       </View>
 
       <Text style={[styles.label, { color: theme.colors.text }]}>Peso (kg)</Text>

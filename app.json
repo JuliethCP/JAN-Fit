@@ -21,16 +21,10 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.juliethcp.JANFit"
+      }
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "180f29d0-fddd-4db1-98df-06ccb60da96a"
-      }
     }
   }
 }
