@@ -1,15 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 const TiposRutinas = () => {
   const tiposRutinas = [
-    'Cardio',
-    'Entrenamiento Funcional',
-    'Tonificación Muscular',
-    'Resistencia',
-    'Fuerza',
-    'Por Músculos'
+    'cardio',
+    'entrenamiento funcional',
+    'tonificación muscular',
+    'resistencia',
+    'fuerza',
+    'por musculos'
   ];
 
   const screenWidth = Dimensions.get('window').width;
@@ -18,11 +19,13 @@ const TiposRutinas = () => {
   const navigation = useNavigation();
 
   const handleTipoRutinaPress = (tipo) => {
-    navigation.navigate('Rutinas', { titulo: tipo });
+    navigation.navigate('Rutinas', { tipo });
   };
 
   return (
     <View style={styles.container}>
+  
+
       <View style={styles.gridContainer}>
         {tiposRutinas.map((tipo, index) => (
           <TouchableOpacity
@@ -30,6 +33,7 @@ const TiposRutinas = () => {
             style={[styles.square, { width: squareSize, height: squareSize }]}
             onPress={() => handleTipoRutinaPress(tipo)}
           >
+            <AntDesign name="right" size={24} color="black" />
             <Text style={styles.tipoText}>{tipo}</Text>
           </TouchableOpacity>
         ))}
@@ -43,11 +47,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#F5F5F5',
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   gridContainer: {
     flexDirection: 'row',
@@ -57,12 +62,19 @@ const styles = StyleSheet.create({
   square: {
     backgroundColor: 'lightblue',
     margin: 10,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
   },
   tipoText: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginTop: 5,
+    color: 'black',
   },
 });
 
