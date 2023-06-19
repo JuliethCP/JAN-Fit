@@ -11,6 +11,8 @@ import Cronometro from './src/components/Cronometro';
 import * as Font from 'expo-font';
 import DatosUsuario from './src/components/DatosUsuario';
 import Categories from './src/components/Categories';
+import Ejercicios from './src/components/Ejercicios';
+import InfoEjercicios from './src/components/InfoEjercicios';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -19,11 +21,11 @@ function HomeScreen() {
   return (
     <View style={{ flex: 1 }}>
       <Home />
-      <Cronometro />
+      
     </View>
   );
 }
-
+//<Cronometro />
 function Categorias() {
   const { colors } = useTheme();
   const textColor = colors.text;
@@ -125,7 +127,9 @@ export default function App() {
     <NavigationContainer theme={theme}>
       <View style={containerStyle}>
         <Stack.Navigator>
-       
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Ejercicios" component={Ejercicios} />
+        <Stack.Screen name="InfoEjercicios" component={InfoEjercicios} />
           <Stack.Screen name="Tabs" options={{ headerShown: false }}>
             {() => <Tabs setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
           </Stack.Screen>
