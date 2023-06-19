@@ -23,7 +23,7 @@ const Ejercicios = ({ route }) => {
       );
       setExerciseInfo(filteredExercises);
     } catch (error) {
-      console.error(error);
+      console.log('Error:', error);
     }
   };
 
@@ -38,6 +38,7 @@ const Ejercicios = ({ route }) => {
   const renderExercise = ({ item }) => {
     return (
       <TouchableOpacity
+        key={item.uuid} // Agrega la clave única aquí
         style={styles.exerciseContainer}
         onPress={() => handleExercisePress(item)}
       >
@@ -45,6 +46,7 @@ const Ejercicios = ({ route }) => {
       </TouchableOpacity>
     );
   };
+  
 
   return (
     <View style={styles.container}>
@@ -52,8 +54,9 @@ const Ejercicios = ({ route }) => {
       <FlatList
         data={exerciseInfo}
         renderItem={renderExercise}
-        keyExtractor={(item) => item.uuid}
+        keyExtractor={(item, index) => index.toString()} // Utiliza el índice como clave
       />
+
     </View>
   );
 };

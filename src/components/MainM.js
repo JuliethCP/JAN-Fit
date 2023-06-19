@@ -19,7 +19,7 @@ const MainM = () => {
       const sortedGroups = data.sort((a, b) => a.grupomuscular.localeCompare(b.grupomuscular)); // Ordenar los grupos alfabéticamente
       setMuscleGroups(sortedGroups);
     } catch (error) {
-      console.error(error);
+      console.log('Error:', error);
     }
   };
 
@@ -33,13 +33,14 @@ const MainM = () => {
     fetchMuscleGroups();
   };
 
-  const renderMuscleGroup = ({ item }) => {
+  const renderMuscleGroup = ({ item, index }) => { // Agrega el parámetro "index" aquí
     const { grupomuscular, ejerciciosasociados } = item;
-
+  
     // Verificar si el objeto tiene las propiedades adecuadas
     if (grupomuscular && ejerciciosasociados) {
       return (
         <TouchableOpacity
+          key={index.toString()} // Utiliza el índice como clave única
           style={[styles.groupContainer, { backgroundColor: colors.card }]}
           onPress={() => handleGroupPress(grupomuscular)}
         >
@@ -47,10 +48,11 @@ const MainM = () => {
         </TouchableOpacity>
       );
     }
-
+  
     // Si el objeto no tiene las propiedades adecuadas, se muestra un componente vacío
     return null;
   };
+  
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
