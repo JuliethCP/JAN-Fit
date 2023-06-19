@@ -13,28 +13,42 @@ SELECT setval('public.ejercicios_id_seq', 1);
 
 CREATE TABLE GruposMusculares (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(50)
+    nomGrupoMuscular VARCHAR(50)
 );
 
 CREATE TABLE Ejercicios(
 	id SERIAL PRIMARY KEY,
-	idGrupoMuscular int,
+	--idGrupoMuscular int,
     nombreEjercicio VARCHAR(50),
 	descripcion VARCHAR(100),
 	gif varchar(50),
 	
+);
+
+CREATE TABLE Ejercicios_GrpMuscular(
+	idEjercicio INT,
+	idGrupoMuscular INT,
+	
+	FOREIGN KEY (idEjercicio) REFERENCES Ejercicios(id),
 	FOREIGN KEY (idGrupoMuscular) REFERENCES GruposMusculares(id)
 );
 
-ALTER TABLE Ejercicios
-ALTER COLUMN descripcion TYPE VARCHAR(350);
+ALTER TABLE ejercicios
+alter COLUMN duracion time,
+ADD COLUMN tiempoDescanso time;
 
-
+select * from gruposmusculares
 CREATE TABLE Rutinas(
 	id serial PRIMARY KEY,
 	nombreRutina varchar(50)
 
 );
+
+UPDATE Rutinas
+SET tipo = 'glúteos'
+WHERE rutinas.id = 12;
+
+select * from Rutinas;
 
 CREATE TABLE Rutina_Ejercicios(
 	idRutina smallint,
@@ -46,8 +60,8 @@ CREATE TABLE Rutina_Ejercicios(
 	FOREIGN KEY (idEjercicio) REFERENCES Ejercicios(id)
 );
 
-ALTER TABLE Rutina_Ejercicios
-ALTER COLUMN repeticiones DROP NOT NULL,
+ALTER TABLE Rutinas
+ADD COLUMN repeticiones TYPE,
 ALTER COLUMN tiempo DROP NOT NULL;
 
 
@@ -96,35 +110,51 @@ CREATE OR REPLACE PROCEDURE insertar_grupo_muscular(
 )
 AS $$
 BEGIN
-    INSERT INTO GruposMusculares (nombre)
+    INSERT INTO GruposMusculares("nomGrupoMuscular")
     VALUES (nombre_grupo);
 END;
 $$ LANGUAGE plpgsql;
 
 ------------------------------
 CREATE OR REPLACE PROCEDURE insertar_ejercicio(
-    id_grupo_muscular INT,
     nombre_ejercicio VARCHAR(50),
     descripcion VARCHAR(100),
     gif VARCHAR(50)
 )
 AS $$
 BEGIN
-    INSERT INTO Ejercicios (idGrupoMuscular, nombreEjercicio, descripcion, gif)
-    VALUES (id_grupo_muscular, nombre_ejercicio, descripcion, gif);
+    INSERT INTO Ejercicios ( nombreEjercicio, descripcion, gif)
+    VALUES ( nombre_ejercicio, descripcion, gif);
 END;
 $$ LANGUAGE plpgsql;
+-----------------------
 
----------------------
-CREATE OR REPLACE PROCEDURE insertar_rutina(
-    nombre_rutina VARCHAR(50)
+
+CREATE OR REPLACE PROCEDURE insertar_ejercicio_grpmuscular(
+    idEjercicio INT,
+    idGrupoMuscular INT
 )
 AS $$
 BEGIN
-    INSERT INTO Rutinas (nombreRutina)
-    VALUES (nombre_rutina);
+    INSERT INTO Ejercicios_GrpMuscular (idEjercicio, idGrupoMuscular)
+    VALUES (idEjercicio, idGrupoMuscular);
 END;
 $$ LANGUAGE plpgsql;
+---------------------
+CREATE OR REPLACE PROCEDURE insertar_rutina(
+    nombre_rutina VARCHAR(50),
+	duracion time,
+	tiempodescanso time,
+	tipo varchar(30)
+)
+AS $$
+BEGIN
+    INSERT INTO Rutinas (nombreRutina, duracion, tiempodescanso, tipo)
+    VALUES (nombre_rutina, duracion, tiempodescanso, tipo);
+END;
+$$ LANGUAGE plpgsql;
+select * from rutinas
+CALL insertar_rutina('Rutina cardio 2', '00:40:00','00:01:00', 'cardio' );
 -----------------
 
 CREATE OR REPLACE PROCEDURE insertar_rutina_ejercicio(
@@ -143,7 +173,7 @@ $$ LANGUAGE plpgsql;
 -------------------
 CREATE OR REPLACE PROCEDURE insertar_progreso(
     id_usuario INT,
-    peso SMALLINT,
+    peso int,
     altura FLOAT,
     imc FLOAT
 )
