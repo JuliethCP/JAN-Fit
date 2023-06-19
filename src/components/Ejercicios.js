@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 const Ejercicios = ({ route }) => {
-  const { ejercicios } = route.params || {}; // Asigna un objeto vacío como valor predeterminado si route.params es undefined
+  const { ejercicios } = route.params;
   const [exerciseInfo, setExerciseInfo] = useState(null);
   const navigation = useNavigation();
 
@@ -14,25 +14,25 @@ const Ejercicios = ({ route }) => {
 
   const fetchExerciseInfo = async () => {
     try {
-      const response = await axios.get('https://e550-190-211-119-6.ngrok.io/api/ejercicios');
+      const response = await axios.get('https://105a-190-211-119-6.ngrok.io/api/ejercicios');
       const data = response.data;
 
-      // Verificar si ejercicios está definido y no es undefined
-      if (ejercicios && Array.isArray(ejercicios)) {
-        // Filtrar los ejercicios que coinciden con los nombres recogidos
-        const filteredExercises = data.filter((ejercicio) =>
-          ejercicios.includes(ejercicio.ejercicio)
-        );
-        setExerciseInfo(filteredExercises);
-      }
+      // Filtrar los ejercicios que coinciden con los nombres recogidos
+      const filteredExercises = data.filter((ejercicio) =>
+        ejercicios.includes(ejercicio.ejercicio)
+      );
+      setExerciseInfo(filteredExercises);
     } catch (error) {
-      alert('Error.');
       console.error(error);
     }
   };
 
   const handleExercisePress = (ejercicio) => {
     navigation.navigate('InfoEjercicios', { ejercicio });
+  };
+
+  const handleRefresh = () => {
+    fetchExerciseInfo();
   };
 
   const renderExercise = ({ item }) => {
@@ -48,7 +48,7 @@ const Ejercicios = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Ejercicios</Text>
+      <Button title="Refrescar" onPress={handleRefresh} />
       <FlatList
         data={exerciseInfo}
         renderItem={renderExercise}

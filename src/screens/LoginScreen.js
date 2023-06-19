@@ -41,7 +41,7 @@ const LoginScreen = () => {
 
       // Verificar si ya existe un usuario con el mismo correo electrónico y contraseña
       const existingUser = await axios.get(
-        'https://e550-190-211-119-6.ngrok.io/api/usuarios',
+        'https://105a-190-211-119-6.ngrok.io/api/usuarios',
         {
           params: {
             correo: email,
@@ -137,7 +137,7 @@ const LoginScreen = () => {
               inputType="password"
               value={password}
               onChangeText={setPassword}
-              fieldButtonLabel={'Forgot?'}
+             
               fieldButtonFunction={() => {}}
             />
 

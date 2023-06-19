@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import axios from 'axios';
 import { useNavigation, useTheme } from '@react-navigation/native';
 
@@ -14,7 +14,7 @@ const MainM = () => {
 
   const fetchMuscleGroups = async () => {
     try {
-      const response = await axios.get('https://e550-190-211-119-6.ngrok.io/api/grupos_musculares');
+      const response = await axios.get('https://105a-190-211-119-6.ngrok.io/api/grupos_musculares');
       const data = response.data;
       const sortedGroups = data.sort((a, b) => a.grupomuscular.localeCompare(b.grupomuscular)); // Ordenar los grupos alfabéticamente
       setMuscleGroups(sortedGroups);
@@ -27,6 +27,10 @@ const MainM = () => {
     const group = muscleGroups.find((group) => group.grupomuscular === grupoMuscular);
     const groupExercises = group ? group.ejerciciosasociados : [];
     navigation.navigate('Ejercicios', { ejercicios: groupExercises });
+  };
+
+  const handleRefresh = () => {
+    fetchMuscleGroups();
   };
 
   const renderMuscleGroup = ({ item }) => {
@@ -50,7 +54,7 @@ const MainM = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.text }]}>Exercise List</Text>
+      <Button title="Refrescar" onPress={handleRefresh} />
       <FlatList
         data={muscleGroups}
         renderItem={renderMuscleGroup}
