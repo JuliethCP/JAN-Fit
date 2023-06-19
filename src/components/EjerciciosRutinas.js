@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, FlatList, StyleSheet } from "react-native
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const RutinasEjercicio = () => {
+  //https://896e-190-211-119-6.ngrok.io/api/rutina_ejercicios
   const rutinasData = [
     {
       nombrerutina: "Rutina de entrenamiento de abdominales",

@@ -21,15 +21,15 @@ const Rutinas = () => {
       });
   }, [tipo]);
 
-  const handleRutinaPress = (id) => {
-    navigation.navigate('EjercicioRutinas', { id });
+  const handleRutinaPress = (nombre) => {
+    navigation.navigate('EjercicioRutinas', { nombre });
   };
 
   const renderRutina = ({ item }) => {
     return (
       <TouchableOpacity
         style={styles.rutinaContainer}
-        onPress={() => handleRutinaPress(item.id)}
+        onPress={() => handleRutinaPress(item.nombrerutina)}
       >
         <Text style={styles.rutinaName}>{item.nombrerutina}</Text>
         <View style={styles.detailsContainer}>

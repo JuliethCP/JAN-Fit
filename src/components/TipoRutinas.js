@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 const TiposRutinas = () => {
@@ -24,8 +23,6 @@ const TiposRutinas = () => {
 
   return (
     <View style={styles.container}>
-  
-
       <View style={styles.gridContainer}>
         {tiposRutinas.map((tipo, index) => (
           <TouchableOpacity
@@ -33,7 +30,6 @@ const TiposRutinas = () => {
             style={[styles.square, { width: squareSize, height: squareSize }]}
             onPress={() => handleTipoRutinaPress(tipo)}
           >
-            <AntDesign name="right" size={24} color="black" />
             <Text style={styles.tipoText}>{tipo}</Text>
           </TouchableOpacity>
         ))}
