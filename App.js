@@ -10,12 +10,13 @@ import MainM from './src/components/MainM';
 import Cronometro from './src/components/Cronometro';
 import * as Font from 'expo-font';
 import DatosUsuario from './src/components/DatosUsuario';
-import TiposRutinas from './src/components/TipoRutinas';
-import Rutine from './src/components/Rutinas';
 import Ejercicios from './src/components/Ejercicios';
 import Informacion from './src/components/Informacion';
 import { useNavigation } from '@react-navigation/native';
 import UserContext from './src/components/UserContext';
+import TiposRutinas from './src/components/TipoRutinas';
+import Rutine from './src/components/Rutinas';
+import EjerciciosRutinas from './src/components/RutinasEjercicio';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,13 +37,14 @@ function RutinasScreen() {
 
   return (
     <Stack.Navigator>
-    <Stack.Screen name="Tipos de Rutinas" component={TiposRutinas} />
+    <Stack.Screen name="TiposRutinas" component={TiposRutinas} />
     <Stack.Screen name="Rutinas" component={Rutine} />
+    <Stack.Screen name="EjercicioRutinas" component={EjerciciosRutinas} />
   </Stack.Navigator>
   );
 }
 
-function BuscarScreen() {
+function EntrenamientoScreen() {
   const { colors } = useTheme();
   const textColor = colors.text;
 
@@ -157,7 +159,7 @@ function Tabs({ setIsDarkMode, isDarkMode }) {
 
           if (route.name === 'Inicio') {
             iconName = 'home-outline';
-          } else if (route.name === 'Buscar') {
+          } else if (route.name === 'Entrenamiento') {
             iconName = 'search-outline';
           } else if (route.name === 'Rutinas') {
             iconName = 'list-outline';
@@ -170,7 +172,7 @@ function Tabs({ setIsDarkMode, isDarkMode }) {
       })}
     >
       <Tab.Screen name="Inicio" component={HomeScreen}options={{ headerShown: false }} />
-      <Tab.Screen name="Buscar" component={BuscarScreen} />
+      <Tab.Screen name="Entrenamiento" component={EntrenamientoScreen} />
       <Tab.Screen name="Rutinas" component={RutinasScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Perfil">
         {() => <Perfil setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />}

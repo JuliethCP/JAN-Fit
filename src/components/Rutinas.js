@@ -29,8 +29,7 @@ const Rutinas = () => {
     return (
       <TouchableOpacity
         style={styles.rutinaContainer}
-        onPress={() => handleRutinaPress(item.nombrerutina)}
-      >
+        onPress={() => handleRutinaPress(item.nombrerutina)}>
         <Text style={styles.rutinaName}>{item.nombrerutina}</Text>
         <View style={styles.detailsContainer}>
           <Text style={styles.detailTitle}>Tiempo de la rutina:</Text>
