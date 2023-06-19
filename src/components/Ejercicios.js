@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { useTheme } from '@react-navigation/native';
 
 const Ejercicios = ({ route }) => {
   const { ejercicios } = route.params;
   const [exerciseInfo, setExerciseInfo] = useState(null);
   const navigation = useNavigation();
+  const { colors } = useTheme();
 
   useEffect(() => {
     fetchExerciseInfo();
@@ -28,7 +30,7 @@ const Ejercicios = ({ route }) => {
   };
 
   const handleExercisePress = (ejercicio) => {
-    navigation.navigate('InfoEjercicios', { ejercicio });
+    navigation.navigate('Informacion', { ejercicio });
   };
 
   const handleRefresh = () => {
@@ -39,24 +41,22 @@ const Ejercicios = ({ route }) => {
     return (
       <TouchableOpacity
         key={item.uuid} // Agrega la clave única aquí
-        style={styles.exerciseContainer}
+        style={[styles.exerciseContainer, { backgroundColor: colors.card }]}
         onPress={() => handleExercisePress(item)}
       >
-        <Text style={styles.exerciseName}>{item.ejercicio}</Text>
+        <Text style={[styles.exerciseName, { color: colors.text }]}>{item.ejercicio}</Text>
       </TouchableOpacity>
     );
   };
-  
 
   return (
-    <View style={styles.container}>
-      <Button title="Refrescar" onPress={handleRefresh} />
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Button title="Refrescar" onPress={handleRefresh} color={colors.primary} />
       <FlatList
         data={exerciseInfo}
         renderItem={renderExercise}
         keyExtractor={(item, index) => index.toString()} // Utiliza el índice como clave
       />
-
     </View>
   );
 };
@@ -64,26 +64,23 @@ const Ejercicios = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 20,
+    marginTop: 10,
     paddingHorizontal: 10,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
   },
   exerciseContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 100,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    marginBottom: 10,
-    backgroundColor: '#f1f1f1',
+    borderWidth: 2,
+    borderColor: 'black',
+    marginTop: 15,
+    marginBottom: 15,
+    borderRadius: 15,
+    paddingHorizontal: 20,
   },
   exerciseName: {
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 

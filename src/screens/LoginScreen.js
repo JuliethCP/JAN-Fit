@@ -61,6 +61,7 @@ const LoginScreen = () => {
 
           // Assign user info to userData
           const userInfo = {
+            id: userExists.id,
             nombre: userExists.nombre,
             correo: userExists.correo,
             fechanacimiento: userExists.fechanacimiento,

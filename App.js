@@ -13,7 +13,7 @@ import DatosUsuario from './src/components/DatosUsuario';
 import TiposRutinas from './src/components/TipoRutinas';
 import Rutine from './src/components/Rutinas';
 import Ejercicios from './src/components/Ejercicios';
-import InfoEjercicios from './src/components/InfoEjercicios';
+import Informacion from './src/components/Informacion';
 import { useNavigation } from '@react-navigation/native';
 import UserContext from './src/components/UserContext';
 
@@ -23,9 +23,9 @@ const Stack = createStackNavigator();
 function HomeScreen() {
   return (
    <Stack.Navigator>
-     <Stack.Screen name="Grupos Musculares" component={MainM} options={{ headerShown: false }} />
+      <Stack.Screen name="Inicio" component={MainM}  />
       <Stack.Screen name="Ejercicios" component={Ejercicios} />
-      <Stack.Screen name="InfoEjercicios" component={InfoEjercicios} />
+      <Stack.Screen name="Informacion" component={Informacion} />
     </Stack.Navigator>
   );
 }
@@ -36,13 +36,13 @@ function RutinasScreen() {
 
   return (
     <Stack.Navigator>
-    <Stack.Screen name="TiposRutinas" component={TiposRutinas} />
+    <Stack.Screen name="Tipos de Rutinas" component={TiposRutinas} />
     <Stack.Screen name="Rutinas" component={Rutine} />
   </Stack.Navigator>
   );
 }
 
-function Julian() {
+function BuscarScreen() {
   const { colors } = useTheme();
   const textColor = colors.text;
 
@@ -134,6 +134,7 @@ export default function App() {
       <View style={containerStyle}>
         <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Register" component={RegisterScreen} /*options={{ headerShown: false }}*/ />
           <Stack.Screen name="Tabs" options={{ headerShown: false }}>
             {() => <Tabs setIsDarkMode={setIsDarkMode} isDarkMode={isDarkModeState} />}
           </Stack.Screen>
@@ -154,9 +155,9 @@ function Tabs({ setIsDarkMode, isDarkMode }) {
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
-          if (route.name === 'Home') {
+          if (route.name === 'Inicio') {
             iconName = 'home-outline';
-          } else if (route.name === 'Julian') {
+          } else if (route.name === 'Buscar') {
             iconName = 'search-outline';
           } else if (route.name === 'Rutinas') {
             iconName = 'list-outline';
@@ -168,9 +169,9 @@ function Tabs({ setIsDarkMode, isDarkMode }) {
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Julian" component={Julian} />
-      <Tab.Screen name="Rutinas" component={RutinasScreen} />
+      <Tab.Screen name="Inicio" component={HomeScreen}options={{ headerShown: false }} />
+      <Tab.Screen name="Buscar" component={BuscarScreen} />
+      <Tab.Screen name="Rutinas" component={RutinasScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Perfil">
         {() => <Perfil setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />}
       </Tab.Screen>

@@ -53,11 +53,10 @@ const MainM = () => {
     // Si el objeto no tiene las propiedades adecuadas, se muestra un componente vacío
     return null;
   };
-  
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Button title="Refrescar" onPress={handleRefresh} />
+      <Button title="Refrescar" onPress={handleRefresh} color={colors.primary} />
       <FlatList
         data={muscleGroups}
         renderItem={renderMuscleGroup}
@@ -70,22 +69,27 @@ const MainM = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 20,
+    paddingVertical: 15,
     paddingHorizontal: 10,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    backgroundColor: '#fff',
   },
   groupContainer: {
     alignItems: 'center',
-    paddingVertical: 10,
-    borderRadius: 5,
-    marginBottom: 10,
+    justifyContent: 'center',
+    paddingVertical: 16,
+    borderRadius: 10,
+    marginTop: 15,
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
   },
   groupTitle: {
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
   },
 });
 
