@@ -12,3 +12,6 @@ N-icole Jara
 
 
 Fit
+
+# Rest API usado
+https://github.com/JuliethCP/RestApi_JAN-Fit
